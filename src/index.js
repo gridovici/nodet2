@@ -1,7 +1,8 @@
-var express = require('express');
-var app = express();
-var port = 3456;
+const express = require('express');
 
-app.get('/', (req, res) => res.send('Hello World!'));
+const app = express();
+const port = 3456;
+
+app.get('/', (req, res) => res.send('Hell World!'));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
