@@ -1,76 +1,63 @@
-// const gulp = require('gulp');
-// const browserSync = require('browser-sync');
+/* eslint-disable prefer-arrow-callback */
+import { series, watch } from 'gulp';
+import browserSync from 'browser-sync';
+// var browserSync = require('browser-sync').create();
 import nodemon from 'gulp-nodemon';
+
+const paths = {
+  scripts: {
+    src: 'src/**/*',
+    js: 'src/**/*.js',
+    dest: 'dist/scripts/'
+  }
+};
+
+// BrowserSync Reload
+function browserSyncReload(done) {
+  browserSync.reload({
+    stream: true
+  });
+  done();
+}
+
+// Clean assets
+// function clean() {
+//   return del(["./_site/assets/"]);
+// }
+const BROWSER_SYNC_RELOAD_DELAY = 1000;
 
 function startNodemon(cb) {
   let started = false;
 
   return nodemon({
     script: 'src/index.js',
-    tasks: ['browser-sync'],
+    watch: ['src/index.js']
   }).on('start', () => {
     if (!started) {
       cb();
       started = true;
+      browserSync.init({
+        proxy: 'http://localhost:3456',
+        browser: 'google chrome',
+        port: 7000,
+        open: false
+      });
     }
+  }).on('restart', function onRestart() {
+    setTimeout(() => {
+      console.log('WATCHING...');
+      browserSync.reload();
+    }, BROWSER_SYNC_RELOAD_DELAY);
   });
 }
 
-exports.default = startNodemon;
+const watchTask = () => {
+  watch(paths.scripts.src, browserSyncReload);
+  console.log('WATCHING...');
+};
 
-// gulp.task(
-//   'browser-sync',
-//   () => {
-//     browserSync.init(null, {
-//       proxy: 'http://localhost:7000',
-//       files: ['public/**/*.*'],
-//       port: 9000,
-//     });
-//   },
-// );
-
-// gulp.task(
-//   'browser-sync',
-//   gulp.series('nodemon', () => {
-//     browserSync.init(null, {
-//       proxy: 'http://localhost:7000',
-//       files: ['public/**/*.*'],
-//       port: 9000,
-//     });
-//   }),
-// );
+// const dev = gulp.series(clean, scripts, serve, watch);
+const dev = series(startNodemon);
+export default dev;
 
 // gulp.task('serve', gulp.series('browser-sync', () => {}));
-
-/*
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const nodemon = require('gulp-nodemon');
-
-
-gulp.task('default', ['browser-sync'], () => {});
-
-gulp.task('browser-sync', ['nodemon'], () => {
-  browserSync.init(null, {
-    proxy: 'http://localhost:5000',
-    files: ['src/**  /*.*'],
-    browser: 'google chrome',
-    port: 3456,
-  });
-});
-
-gulp.task('nodemon', (cb) => {
-  let started = false;
-
-  return nodemon({
-    script: 'index.js',
-  }).on('start', () => {
-    // to avoid nodemon being started multiple times
-    // thanks @matthisk
-    if (!started) {
-      cb();
-      started = true;
-    }
-  });
-});
-*/
