@@ -8,7 +8,7 @@ function startNodemon(cb) {
   let started = false;
 
   return nodemon({
-    script: 'src/index.js',
+    script: '../src/index.js',
     ignore: [
       // 'gulpfile.js',
       'node_modules/'
