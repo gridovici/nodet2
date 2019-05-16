@@ -12,8 +12,6 @@ app.use(morgan('tiny'));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-// app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-
 app.engine('hbs', hbs({
   extname: 'hbs',
   defaultView: 'home',
@@ -23,13 +21,12 @@ app.engine('hbs', hbs({
 }));
 
 app.get('/', (req, res, next) => {
-    // res.send('Hellooo World 2!!!');
+  // res.send('Hellooo World 2!!!');
   res.render('hello', { layout: 'default' });
 });
 
 
 app.get('/home', (req, res, next) => {
-//   res.render('home', { layout: 'default' });
   res.render('home');
 });
 

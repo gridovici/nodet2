@@ -23,7 +23,7 @@ function lint() {
   return src([paths.js])
     .pipe(eslint())
     .pipe(eslint.format());
-    // .pipe(eslint.failAfterError());
+  // .pipe(eslint.failAfterError());
 }
 
 // Clean assets
