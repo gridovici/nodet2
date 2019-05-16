@@ -8,6 +8,9 @@ const port = 3456;
 
 app.use(morgan('tiny'));
 
+// serve static files from the `public` folder
+app.use(express.static(path.join(__dirname, '/public')));
+
 // view engine setup
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
