@@ -1,8 +1,8 @@
-/* eslint-disable prefer-arrow-callback */
 import { series, watch } from 'gulp';
-// import browserSync from 'browser-sync';
-var browserSync = require('browser-sync').create();
 import nodemon from 'gulp-nodemon';
+// import browserSync from 'browser-sync';
+
+const browserSync = require('browser-sync').create();
 
 const paths = {
   scripts: {
@@ -51,12 +51,12 @@ function startNodemon(cb) {
         // open: false
       });
     }
-  });
-  // .on('restart', function onRestart() {
-    // setTimeout(() => {
-    //   console.log('WATCHING...', Date.now());
-    //   browserSync.reload();
-    // }, BROWSER_SYNC_RELOAD_DELAY);
+  })
+  // .on('restart', () => {
+  //   setTimeout(() => {
+  //     console.log('WATCHING...', Date.now());
+  //     browserSync.reload();
+  //   }, BROWSER_SYNC_RELOAD_DELAY);
   // });
 }
 

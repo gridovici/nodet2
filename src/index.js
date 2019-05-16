@@ -17,20 +17,20 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.engine('hbs', hbs({
   extname: 'hbs',
-//   defaultView: 'default',
-//   defaultLayout: 'index',
+  defaultView: 'default',
+  defaultLayout: 'index',
 //   layoutsDir: path.join(__dirname, 'views/pages/'),
-//   partialsDir: path.join(__dirname, 'views/partials/')
+  partialsDir: path.join(__dirname, 'views/partials/')
 }));
 
-app.get('/', (req, res) => {
-  res.send('Hellooo World 1!!!');
-//   res.render('index');
-});
-
-// app.get('/', (req, res, next) => {
-//   // res.render('index');
-//   res.render('hello', { layout: 'default' });
+// app.get('/', (req, res) => {
+//   res.send('Hellooo World 1!!!');
+// //   res.render('index');
 // });
+
+app.get('/', (req, res, next) => {
+//   res.render('index');
+  res.render('hello', { layout: 'default' });
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
