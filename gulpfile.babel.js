@@ -1,30 +1,35 @@
-import { series, watch } from 'gulp';
+import { series, src } from 'gulp';
 import nodemon from 'gulp-nodemon';
-// import browserSync from 'browser-sync';
+import eslint from 'gulp-eslint';
+import browserSyncModule from 'browser-sync';
 
-const browserSync = require('browser-sync').create();
-
+const browserSync = browserSyncModule.create();
 const paths = {
-  scripts: {
-    src: 'src/**/*',
-    js: 'src/**/*.js',
-    dest: 'dist/scripts/'
-  }
+  src: 'src/**/*',
+  js: 'src/**/*.js',
+  hbs: 'src/views/**/*.hbs',
+  dest: 'dist/scripts/'
 };
 
 // BrowserSync Reload
-function browserSyncReload(done) {
-  browserSync.reload({
-    stream: true
-  });
-  done();
+// function browserSyncReload(done) {
+//   browserSync.reload({
+//     stream: true
+//   });
+//   done();
+// }
+
+function lint() {
+  return src([paths.js])
+    .pipe(eslint())
+    .pipe(eslint.format());
+    // .pipe(eslint.failAfterError());
 }
 
 // Clean assets
 // function clean() {
 //   return del(["./_site/assets/"]);
 // }
-const BROWSER_SYNC_RELOAD_DELAY = 1000;
 
 function startNodemon(cb) {
   let started = false;
@@ -43,7 +48,8 @@ function startNodemon(cb) {
       console.log('STRATING>...');
       browserSync.init({
         proxy: 'http://localhost:3456',
-        files: ['src/**/*.js', 'src/**/*.hbs', 'src/assets/scss/**/*.scss'],
+        // files: ['src/**/*.js', 'src/**/*.hbs', 'src/assets/scss/**/*.scss'],
+        files: ['src/**/*'],
         browser: 'google chrome',
         port: 7000,
         notify: true,
@@ -51,22 +57,18 @@ function startNodemon(cb) {
         // open: false
       });
     }
-  })
-  // .on('restart', () => {
-  //   setTimeout(() => {
-  //     console.log('WATCHING...', Date.now());
-  //     browserSync.reload();
-  //   }, BROWSER_SYNC_RELOAD_DELAY);
-  // });
+  });
 }
 
-const watchTask = () => {
-  watch(paths.scripts.src, browserSyncReload);
-  console.log('WATCHING...');
-};
+// const watchTask = () => {
+//   // watch(paths.src, browserSyncReload);
+//   // watch(paths.hbs, browserSyncReload);
+//   watch(paths.src, browserSyncReload);
+//   console.log('WATCH TASK...');
+// };
 
 // const dev = gulp.series(clean, scripts, serve, watch);
-const dev = series(startNodemon);
+const dev = series(lint, startNodemon);
 export default dev;
 
 // gulp.task('serve', gulp.series('browser-sync', () => {}));
