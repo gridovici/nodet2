@@ -1,7 +1,7 @@
 /* eslint-disable prefer-arrow-callback */
 import { series, watch } from 'gulp';
-import browserSync from 'browser-sync';
-// var browserSync = require('browser-sync').create();
+// import browserSync from 'browser-sync';
+var browserSync = require('browser-sync').create();
 import nodemon from 'gulp-nodemon';
 
 const paths = {
@@ -31,24 +31,33 @@ function startNodemon(cb) {
 
   return nodemon({
     script: 'src/index.js',
+    ignore: [
+      // 'gulpfile.js',
+      'node_modules/'
+    ],
     watch: ['src/index.js']
   }).on('start', () => {
     if (!started) {
       cb();
       started = true;
+      console.log('STRATING>...');
       browserSync.init({
         proxy: 'http://localhost:3456',
+        files: ['src/**/*.js', 'src/**/*.hbs', 'src/assets/scss/**/*.scss'],
         browser: 'google chrome',
         port: 7000,
-        open: false
+        notify: true,
+        reloadOnRestart: true
+        // open: false
       });
     }
-  }).on('restart', function onRestart() {
-    setTimeout(() => {
-      console.log('WATCHING...');
-      browserSync.reload();
-    }, BROWSER_SYNC_RELOAD_DELAY);
   });
+  // .on('restart', function onRestart() {
+    // setTimeout(() => {
+    //   console.log('WATCHING...', Date.now());
+    //   browserSync.reload();
+    // }, BROWSER_SYNC_RELOAD_DELAY);
+  // });
 }
 
 const watchTask = () => {
