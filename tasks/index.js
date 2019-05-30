@@ -1,20 +1,30 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { series } from 'gulp';
 import lint from './gulpLint';
-import startNodemon from './gulpNodemon';
+import { scripts } from './webpack';
+import server from './server';
 
-// BrowserSync Reload
-// function browserSyncReload(done) {
-//   browserSync.reload({
-//     stream: true
-//   });
-//   done();
-// }
+export const dev = series(lint, server);
+export const build = series(scripts);
 
-// Clean assets
-// function clean() {
-//   return del(["./_site/assets/"]);
-// }
-
-const dev = series(lint, startNodemon);
 export default dev;
+
+// import { series } from 'gulp';
+// import lint from './gulpLint';
+// import startNodemon from './gulpNodemon';
+
+// // BrowserSync Reload
+// // function browserSyncReload(done) {
+// //   browserSync.reload({
+// //     stream: true
+// //   });
+// //   done();
+// // }
+
+// // Clean assets
+// // function clean() {
+// //   return del(["./_site/assets/"]);
+// // }
+
+// const dev = series(lint, startNodemon);
+// export default dev;

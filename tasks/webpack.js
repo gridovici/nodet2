@@ -5,22 +5,38 @@ import process from 'process';
 
 const isProduction = (process.env.NODE_ENV === 'production');
 
-const config = {
+export const config = {
 
-  entry: './js/main.js',
+  // entry: './js/main.js',
+  //   entry: './srcServer.js',
+
+  entry: {
+    main: [
+      './srcServer.js',
+      'webpack/hot/dev-server',
+      'webpack-hot-middleware/client'
+    ]
+  },
+
+  //   plugins: [
+  //     new webpack.HotModuleReplacementPlugin()
+  //   ],
 
   output: {
     filename: './js/bundle.js',
-    path: path.resolve(__dirname, '../site')
+    path: path.resolve(__dirname, '../src')
   },
 
-  context: path.resolve(__dirname, '../site'),
+  // Necessary to set all paths relative to src folder, otherwise it would
+  // start from tasks folder which would lead to confusion
+  context: path.resolve(__dirname, '../src'),
 
-  plugins: isProduction ? [new webpack.optimize.UglifyJsPlugin()] : []
+  plugins: isProduction
+    ? [new webpack.optimize.UglifyJsPlugin()]
+    : [new webpack.HotModuleReplacementPlugin()]
 };
 
-
-function scripts() {
+export function scripts() {
   return new Promise(resolve => webpack(config, (err, stats) => {
     if (err) console.log('Webpack', err);
 
@@ -30,4 +46,4 @@ function scripts() {
   }));
 }
 
-module.exports = { config, scripts };
+// module.exports = { config, scripts };

@@ -3,6 +3,11 @@ const path = require('path');
 const morgan = require('morgan');
 const hbs = require('express-handlebars');
 
+import { config as webpackConfig } from '../tasks/webpack';
+const webpack = require('webpack');
+const middleware = require('webpack-dev-middleware');
+const compiler = webpack(config);
+
 const app = express();
 const port = 3456;
 
@@ -10,6 +15,12 @@ app.use(morgan('tiny'));
 
 // serve static files from the `public` folder
 app.use(express.static(path.join(__dirname, '/public')));
+
+app.use(
+  middleware(compiler, {
+    // webpack-dev-middleware options
+  })
+);
 
 // view engine setup
 app.set('view engine', 'hbs');
