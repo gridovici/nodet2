@@ -1,15 +1,17 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import { config as webpackConfig } from '../tasks/webpack';
+
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const hbs = require('express-handlebars');
-
-import { config as webpackConfig } from '../tasks/webpack';
 const webpack = require('webpack');
 const middleware = require('webpack-dev-middleware');
+
 const compiler = webpack(config);
 
 const app = express();
-const port = 3456;
+const PORT = process.env.PORT || 3456;
 
 app.use(morgan('tiny'));
 
@@ -44,7 +46,7 @@ app.get('/home', (req, res, next) => {
   res.render('home');
 });
 
-app.listen(port, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
     console.log(err);
   } else {
