@@ -45,6 +45,11 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        handlebarsLoader: {}
+      }
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.hbs'
     })
