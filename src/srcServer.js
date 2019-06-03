@@ -1,7 +1,7 @@
-const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
-const hbs = require('express-handlebars');
+import express from 'express';
+import path from 'path';
+import morgan from 'morgan';
+import hbs from 'express-handlebars';
 
 const app = express();
 const port = 3456;
