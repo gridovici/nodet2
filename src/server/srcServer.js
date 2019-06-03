@@ -11,7 +11,9 @@ const HTML_FILE = path.join(DIST_DIR, 'index.html');
 app.use(morgan('tiny'));
 
 // serve static files from the `public` folder
-app.use(express.static(path.join(__dirname, '/public')));
+// app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(DIST_DIR));
+// app.use(express.static(path.join(__dirname, '/dist')));
 
 // view engine setup
 app.set('view engine', 'hbs');
