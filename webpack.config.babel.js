@@ -40,18 +40,25 @@ module.exports = {
         // test: /\.html$/,
         // use: [{loader: "html-loader"}]
         test: /\.hbs$/,
-        loader: 'handlebars-loader'
+        loader: 'handlebars-loader',
+        // loader: __dirname + "/../../",
+        query: {
+          partialDirs: [
+            path.join(__dirname, 'src', 'views', 'partials')
+          ]
+        }
       }
     ]
   },
   plugins: [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        handlebarsLoader: {}
-      }
-    }),
+    // new webpack.LoaderOptionsPlugin({
+    //   options: {
+    //     handlebarsLoader: {}
+    //   }
+    // }),
     new HtmlWebpackPlugin({
-      template: './src/index.hbs'
+      // template: './src/index.hbs',
+      template: path.join(__dirname, 'src', 'index.hbs')
     })
   ]
 //   plugins: [
