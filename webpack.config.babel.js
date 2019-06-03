@@ -1,25 +1,21 @@
 import path from 'path';
-import  webpack from 'webpack';
+import webpack from 'webpack';
 import nodeExternals from 'webpack-node-externals';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 module.exports = {
   entry: {
-    server: './src/srcServer.js'
+    server: './src/index.js'
   },
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
-    filename: 'server.js'
+    // filename: 'server.js'
     // filename: '[name].js'
+    filename: 'index.js'
   },
-  target: 'node',
-  node: {
-    // Need this when working with express, otherwise the build fails
-    __dirname: false, // if you don't put this is, __dirname
-    __filename: false // and __filename return blank or /
-  },
-  externals: [nodeExternals()], // Need this to avoid error when working with Express
+  target: 'web',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -42,6 +38,26 @@ module.exports = {
             path.join(__dirname, 'src', 'views', 'partials')
           ]
         }
+      },
+      {
+        // test: /\.css$/,
+        // use: ['style-loader', 'css-loader']
+        test: /\.styl$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader'
+          // {
+            // loader: 'stylus-loader',
+            // options: {
+            //   use: [stylus_plugin()],
+            // },
+          // },
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader']
       }
     ]
   },

@@ -8,7 +8,7 @@ const isProduction = (process.env.NODE_ENV === 'production');
 const config = {
 
 //   entry: './js/main.js',
-  entry: './src/srcServer.js',
+  entry: './src/server/srcServer.js',
 
   output: {
     filename: './src/bundle.js',

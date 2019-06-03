@@ -2,7 +2,7 @@
 // const gulp = require('gulp');
 // const webpack = require('webpack-stream');
 // gulp.task('default', function() {
-//   return gulp.src('src/srcServer.js')
+//   return gulp.src('src/server/srcServer.js')
 //     .pipe(webpack({
 //       // Any configuration options...
 //     }))
