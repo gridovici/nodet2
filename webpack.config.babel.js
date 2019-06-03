@@ -1,10 +1,6 @@
-// const path = require('path');
 import path from 'path';
-// const webpack = require('webpack');
 import  webpack from 'webpack';
-// const nodeExternals = require('webpack-node-externals');
 import nodeExternals from 'webpack-node-externals';
-// const HtmlWebPackPlugin = require('html-webpack-plugin');
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 module.exports = {
@@ -41,7 +37,6 @@ module.exports = {
         // use: [{loader: "html-loader"}]
         test: /\.hbs$/,
         loader: 'handlebars-loader',
-        // loader: __dirname + "/../../",
         query: {
           partialDirs: [
             path.join(__dirname, 'src', 'views', 'partials')
@@ -57,18 +52,12 @@ module.exports = {
     //   }
     // }),
     new HtmlWebpackPlugin({
-      // template: './src/index.hbs',
       template: path.join(__dirname, 'src', 'index.hbs')
+      //       filename: "./index.html",
+      //       // excludeChunks will exclude a file called server which we
+      //       // don’t want to be included into our HTML file, since that
+      //       // is the webserver, and not needed in the app itself
+      //       excludeChunks: [ 'server' ]
     })
   ]
-//   plugins: [
-//     new HtmlWebPackPlugin({
-//       template: "./index.html",
-//       filename: "./index.html",
-//       // excludeChunks will exclude a file called server which we
-//       // don’t want to be included into our HTML file, since that
-//       // is the webserver, and not needed in the app itself
-//       excludeChunks: [ 'server' ]
-//     })
-//   ]
 };
