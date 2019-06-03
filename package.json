@@ -6,8 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp --require @babel/register --gulpfile tasks",
+    "start-express-1": "node src/serve.js",
     "lint:init": "eslint --init",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "build-express": "rm -rf dist && webpack --mode development && npm run start-express",
+    "start-express": "node ./dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +25,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "express-handlebars": "^3.1.0",
+    "handlebars-loader": "^1.7.1",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
@@ -29,6 +33,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
+    "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.5",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -36,6 +41,11 @@
     "gulp": "^4.0.2",
     "gulp-eslint": "^5.0.0",
     "gulp-nodemon": "^2.4.2",
-    "webpack": "^4.30.0"
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-middleware": "^3.7.0",
+    "webpack-node-externals": "^1.7.2",
+    "webpack-stream": "^5.2.1"
   }
 }

@@ -7,14 +7,15 @@ const isProduction = (process.env.NODE_ENV === 'production');
 
 const config = {
 
-  entry: './js/main.js',
+//   entry: './js/main.js',
+  entry: './src/srcServer.js',
 
   output: {
-    filename: './js/bundle.js',
-    path: path.resolve(__dirname, '../site')
+    filename: './src/bundle.js',
+    path: path.resolve(__dirname, '../build')
   },
 
-  context: path.resolve(__dirname, '../site'),
+  context: path.resolve(__dirname, '../build'),
 
   plugins: isProduction ? [new webpack.optimize.UglifyJsPlugin()] : []
 };

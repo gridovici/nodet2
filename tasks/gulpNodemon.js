@@ -8,12 +8,13 @@ function startNodemon(cb) {
   let started = false;
 
   return nodemon({
-    script: './src/srcServer.js',
+    // script: './src/srcServer.js',
+    script: './src/serve.js',
     ignore: [
       // 'gulpfile.js',
       'node_modules/'
     ],
-    watch: ['src/index.js']
+    watch: ['src/index.js', 'src/serve.js']
   }).on('start', () => {
     if (!started) {
       cb();

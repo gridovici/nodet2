@@ -5,6 +5,8 @@ const hbs = require('express-handlebars');
 
 const app = express();
 const port = 3456;
+const DIST_DIR = __dirname;
+const HTML_FILE = path.join(DIST_DIR, 'index.html');
 
 app.use(morgan('tiny'));
 
@@ -24,13 +26,15 @@ app.engine('hbs', hbs({
 }));
 
 app.get('/', (req, res, next) => {
-  // res.send('Hellooo World 2!!!');
-  res.render('hello', { layout: 'default' });
+  // res.send('Hellooo World 3!!!');
+  // res.render('hello', { layout: 'default' });
+  res.sendFile(HTML_FILE);
 });
 
 
 app.get('/home', (req, res, next) => {
-  res.render('home');
+  res.send('home');
+  // res.render('home');
 });
 
 app.listen(port, (err) => {
