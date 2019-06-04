@@ -5,12 +5,11 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 module.exports = {
   entry: {
-    server: './src/index.js'
+    main: './src/index.js'
   },
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
-    // filename: 'server.js'
     // filename: '[name].js'
     filename: 'index.js'
   },
@@ -68,12 +67,12 @@ module.exports = {
     //   }
     // }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'index.hbs')
+      template: path.join(__dirname, 'src', 'index.hbs'),
       //       filename: "./index.html",
-      //       // excludeChunks will exclude a file called server which we
-      //       // don’t want to be included into our HTML file, since that
-      //       // is the webserver, and not needed in the app itself
-      //       excludeChunks: [ 'server' ]
+      // excludeChunks will exclude a file called server which we
+      // don’t want to be included into our HTML file, since that
+      // is the webserver, and not needed in the app itself
+      excludeChunks: ['server']
     })
   ]
 };

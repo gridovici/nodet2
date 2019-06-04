@@ -2,61 +2,41 @@ import path from 'path';
 import  webpack from 'webpack';
 import nodeExternals from 'webpack-node-externals';
 
-module.exports = {
-  entry: {
-    server: './src/server/srcServer.js'
-  },
-  output: {
-    path: path.join(__dirname, 'dist'),
-    publicPath: '/',
-    filename: 'server.js'
+module.exports = (env, argv) => {
+  // mode flag from CLI invocation in package.json script
+  const SERVER_PATH = (argv.mode === 'production')
+    ? './src/server/srcServer-prod.js'
+    : './src/server/srcServer-dev.js';
+
+  return ({
+    entry: {
+      // server: './src/server/srcServer.js'
+      server: SERVER_PATH
+    },
+    output: {
+      path: path.join(__dirname, 'dist'),
+      publicPath: '/',
+      filename: 'server.js'
     // filename: '[name].js'
-  },
-  target: 'node',
-  node: {
+    },
+    target: 'node',
+    node: {
     // Need this when working with express, otherwise the build fails
-    __dirname: false, // if you don't put this is, __dirname
-    __filename: false // and __filename return blank or /
-  },
-  externals: [nodeExternals()], // Need this to avoid error when working with Express
-  module: {
-    rules: [
-      {
+      __dirname: false, // if you don't put this is, __dirname
+      __filename: false // and __filename return blank or /
+    },
+    externals: [nodeExternals()], // Need this to avoid error when working with Express
+    module: {
+      rules: [
+        {
         // Transpiles ES6-8 into ES5
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
         }
-      },
-//       {
-//         // Loads the javacript into html template provided.
-//         // Entry point is set below in HtmlWebPackPlugin in Plugins
-//         // test: /\.html$/,
-//         // use: [{loader: "html-loader"}]
-//         test: /\.hbs$/,
-//         loader: 'handlebars-loader',
-//         query: {
-//           partialDirs: [
-//             path.join(__dirname, 'src', 'views', 'partials')
-//           ]
-//         }
-//       }
-    ]
-  },
-//   plugins: [
-//     // new webpack.LoaderOptionsPlugin({
-//     //   options: {
-//     //     handlebarsLoader: {}
-//     //   }
-//     // }),
-//     new HtmlWebpackPlugin({
-//       template: path.join(__dirname, 'src', 'index.hbs')
-//       //       filename: "./index.html",
-//       //       // excludeChunks will exclude a file called server which we
-//       //       // don’t want to be included into our HTML file, since that
-//       //       // is the webserver, and not needed in the app itself
-//       //       excludeChunks: [ 'server' ]
-//     })
-//   ]
+      ]
+    }
+  });
 };
