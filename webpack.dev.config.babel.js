@@ -10,8 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
-    // filename: '[name].js'
-    filename: 'index.js'
+    filename: '[name].js'
   },
   target: 'web',
   devtool: 'source-map',
@@ -46,12 +45,6 @@ module.exports = {
           'style-loader',
           'css-loader',
           'stylus-loader'
-          // {
-            // loader: 'stylus-loader',
-            // options: {
-            //   use: [stylus_plugin()],
-            // },
-          // },
         ]
       },
       {
@@ -61,18 +54,29 @@ module.exports = {
     ]
   },
   plugins: [
-    // new webpack.LoaderOptionsPlugin({
-    //   options: {
-    //     handlebarsLoader: {}
-    //   }
+  //   // new webpack.LoaderOptionsPlugin({
+  //   //   options: {
+  //   //     handlebarsLoader: {}
+  //   //   }
+  //   // }),
+    // new HtmlWebpackPlugin({
+  //     template: path.join(__dirname, 'src', 'index.hbs'),
+  //     // template: '!!handlebars!src/index.hbs',
+  //     //       filename: "./index.html",
+  //     // excludeChunks will exclude a file called server which we
+  //     // don’t want to be included into our HTML file, since that
+  //     // is the webserver, and not needed in the app itself
+      // excludeChunks: ['server']
+    // })
+    // new HtmlWebpackPlugin({
+    //   // For details on `!!` see https://webpack.github.io/docs/loaders.html#loader-order
+    //   // template: '!!handlebars!src/views/index.hbs'
+    //   template: path.join(__dirname, 'src', 'views', 'index.hbs'),
+    //   filename: 'index.html'
     // }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'index.hbs'),
-      //       filename: "./index.html",
-      // excludeChunks will exclude a file called server which we
-      // don’t want to be included into our HTML file, since that
-      // is the webserver, and not needed in the app itself
-      excludeChunks: ['server']
-    })
+    // new HtmlWebpackPlugin({
+    //   template: path.join(__dirname, 'src', 'views', 'home.hbs'),
+    //   filename: 'home.html'
+    // })
   ]
 };
