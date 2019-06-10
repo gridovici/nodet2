@@ -23,14 +23,15 @@ app.engine('hbs', hbs({
   partialsDir: path.join(__dirname, 'views/partials/')
 }));
 
-app.get('/', (req, res, next) => {
-  // res.send('Hellooo World 2!!!');
-  res.render('hello', { layout: 'default' });
+app.get('/api', (req, res, next) => {
+  res.send('Giving you some API');
+  // res.render('hello', { layout: 'default' });
 });
 
 
-app.get('/home', (req, res, next) => {
-  res.render('home');
+app.get('/*', (req, res, next) => {
+  res.send('Rendering index.html');
+  // res.render('home');
 });
 
 app.listen(port, (err) => {
