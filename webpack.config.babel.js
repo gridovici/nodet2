@@ -1,4 +1,5 @@
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   mode: 'development',
@@ -16,8 +17,14 @@ export default {
   },
   module: {
     rules: [{
-      test: /\.jsx?/,
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
       loader: 'babel-loader'
     }]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'
+    })
+  ]
 };
