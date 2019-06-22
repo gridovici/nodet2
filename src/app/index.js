@@ -6,5 +6,3 @@ ReactDom.render(
     <Main />,
     document.getElementById('app')
 );
-
-// console.log('Hello React!');
