@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
 import { defaultState } from '../const';
 
+// TODO: Uncomment this
 // const defaultState = {
 //   session: {},
 //   comments: [],

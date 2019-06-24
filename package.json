@@ -24,11 +24,13 @@
   "dependencies": {
     "express": "^4.16.4",
     "express-handlebars": "^3.1.0",
+    "history": "^4.7.2",
     "morgan": "^1.9.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
+    "react-router-dom": "^4.3.1",
     "redux": "^4.0.1"
   },
   "devDependencies": {
