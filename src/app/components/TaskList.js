@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-export const TaskList = ({ tasks, name }) => (
+import { requestTaskCreation } from '../actions';
+
+export const TaskList = ({
+  tasks, name, groupID, createNewTask
+}) => (
     <div>
       <h3>{name}</h3>
       <div>
@@ -10,22 +14,31 @@ export const TaskList = ({ tasks, name }) => (
               <div key={task.id}>{task.name}</div>
           ))}
       </div>
+      <button onClick={() => createNewTask(groupID)}>Add Task</button>
     </div>
 );
 
 TaskList.propTypes = {
   tasks: PropTypes.array.isRequired,
   // id: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  groupID: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  createNewTask: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   return {
-    id: ownProps.id,
+    groupID: ownProps.id,
     name: ownProps.name,
     tasks: state.tasks.filter(task => task.group === ownProps.id)
   };
-}
+};
 
-export default connect(mapStateToProps)(TaskList);
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  createNewTask(id) {
+    console.log('Creating new task... ', id);
+    dispatch(requestTaskCreation(id));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);

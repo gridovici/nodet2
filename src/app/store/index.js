@@ -1,5 +1,9 @@
-import { createStore } from 'redux';
-import { defaultState } from '../const';
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
+
+import { defaultState } from '../constants';
+import * as sagas from './sagas.mock';
 
 // TODO: Uncomment this
 // const defaultState = {
@@ -10,10 +14,15 @@ import { defaultState } from '../const';
 //   tasks: []
 // };
 
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
-  (state = defaultState, action) => {
-    return state;
-  }
+  (state = defaultState, action) => state,
+  applyMiddleware(createLogger(), sagaMiddleware)
 );
+
+for (let saga in sagas) {
+  sagaMiddleware.run(sagas[saga]);
+}
 
 export default store;
