@@ -31,7 +31,7 @@ export const requestTaskCreation = groupID => ({
   groupID
 });
 
-export const createTask = (taskID, groupID, ownerID) => ({
+export const createTask = ({ taskID, groupID, ownerID }) => ({
   type: CREATE_TASK,
   taskID,
   groupID,

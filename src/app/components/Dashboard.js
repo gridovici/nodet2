@@ -14,7 +14,7 @@ export const Dashboard = ({ groups }) => (
 );
 
 Dashboard.propTypes = {
-  groups: PropTypes.array
+  groups: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {

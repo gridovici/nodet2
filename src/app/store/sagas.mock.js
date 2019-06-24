@@ -8,7 +8,13 @@ import * as constants from '../constants';
 
 export function* taskCreationSaga() {
   while (true) {
+    // take = stop until specific action is dispatched
     const { groupID } = yield take(constants.REQUEST_TASK_CREATION);
+    const ownerID = 'U1';
+    const taskID = uuid(); // done with random part
+    console.log('------',taskID);
+    // put - whatever action we pass in, send it to store
+    yield put(actions.createTask({ taskID, groupID, ownerID }));
     console.log('got group id ', groupID);
   }
 }

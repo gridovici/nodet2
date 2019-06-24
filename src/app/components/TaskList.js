@@ -26,13 +26,11 @@ TaskList.propTypes = {
   createNewTask: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    groupID: ownProps.id,
-    name: ownProps.name,
-    tasks: state.tasks.filter(task => task.group === ownProps.id)
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  groupID: ownProps.id,
+  name: ownProps.name,
+  tasks: state.tasks.filter(task => task.group === ownProps.id)
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   createNewTask(id) {
