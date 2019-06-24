@@ -10,6 +10,10 @@ export default (state = constants.defaultState.tasks, action) => {
         owner: action.ownerID,
         isComplete: false
       }];
+    case constants.SET_TASK_COMPLETE:
+      return state.map(task => (task.id === action.taskID
+        ? { ...task, isComplete: action.isComplete }
+        : task));
     default:
       return state;
   }
