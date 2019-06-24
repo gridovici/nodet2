@@ -14,6 +14,14 @@ export default (state = constants.defaultState.tasks, action) => {
       return state.map(task => (task.id === action.taskID
         ? { ...task, isComplete: action.isComplete }
         : task));
+    case constants.SET_TASK_GROUP:
+      return state.map(task => ((task.id === action.taskID)
+        ? { ...task, group: action.groupID }
+        : task));
+    case constants.SET_TASK_NAME:
+      return state.map(task => ((task.id === action.taskID)
+        ? { ...task, name: action.name }
+        : task));
     default:
       return state;
   }

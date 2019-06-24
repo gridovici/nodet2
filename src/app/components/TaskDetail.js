@@ -10,17 +10,19 @@ export const TaskDetail = ({
   groups,
   task,
   isComplete,
-  setTaskCompletion
+  setTaskCompletion,
+  setTaskGroup,
+  setTaskName
 }) => (
     <div>
       <div>
-        <input value={task.name}/>
+        <input value={task.name} onChange={setTaskName}/>
       </div>
       <div>
         <button onClick={() => setTaskCompletion(id, !isComplete)}>{isComplete ? 'Reopen' : 'Mark as Completed'}</button>
       </div>
       <div>
-        <select>
+        <select onChange={setTaskGroup} value={task.group}>
           {groups.map(group => (
             <option key={group.id} value={group.id}>{group.name}</option>
           ))}
@@ -39,7 +41,9 @@ TaskDetail.propTypes = {
   id: PropTypes.string.isRequired,
   groups: PropTypes.array.isRequired,
   isComplete: PropTypes.bool.isRequired,
-  setTaskCompletion: PropTypes.func.isRequired
+  setTaskCompletion: PropTypes.func.isRequired,
+  setTaskName: PropTypes.func.isRequired,
+  setTaskGroup: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -54,10 +58,17 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  // const { id } = ownProps.match.params;
+  const { id } = ownProps.match.params;
+  console.log('ID: ', id);
   return {
     setTaskCompletion(id, isComplete) {
       dispatch(actions.setTaskCompletion(id, isComplete));
+    },
+    setTaskGroup(e) {
+      dispatch(actions.setTaskGroup(id, e.target.value));
+    },
+    setTaskName(e) {
+      dispatch(actions.setTaskName(id, e.target.value));
     }
   };
 };
