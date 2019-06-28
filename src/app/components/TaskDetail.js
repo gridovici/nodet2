@@ -59,7 +59,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { id } = ownProps.match.params;
-  console.log('ID: ', id);
   return {
     setTaskCompletion(id, isComplete) {
       dispatch(actions.setTaskCompletion(id, isComplete));
