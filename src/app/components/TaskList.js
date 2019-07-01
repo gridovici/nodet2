@@ -23,7 +23,6 @@ export const TaskList = ({
 
 TaskList.propTypes = {
   tasks: PropTypes.array.isRequired,
-  // id: PropTypes.number.isRequired,
   groupID: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   createNewTask: PropTypes.func.isRequired
