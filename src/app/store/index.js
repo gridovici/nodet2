@@ -3,7 +3,8 @@ import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
 // import { defaultState, CREATE_TASK } from '../constants';
-import * as sagas from './sagas.mock';
+// import * as sagas from './sagas.mock';
+import * as sagas from './sagas';
 import reducer from './reducer';
 
 // TODO: Uncomment this
