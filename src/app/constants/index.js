@@ -1,3 +1,5 @@
+import md5 from 'md5';
+
 export const SET_TASK_COMPLETE = 'SET_TASK_COMPLETE';
 export const SET_TASK_GROUP = 'SET_TASK_GROUP';
 export const SET_TASK_NAME = 'SET_TASK_NAME';
@@ -14,15 +16,19 @@ export const USERNAME_RESERVED = 'USERNAME_RESERVED';
 export const REQUEST_USER_ACCOUNT_CREATION = 'REQUEST_USER_ACCOUNT_CREATION';
 
 export const defaultState = {
+  session: {
+    // authenticated: false
+    authenticated: null
+  },
   users: [{
     id: 'U1',
     name: 'Dev',
-    passwordHash: 'TUPLES', // md5("TUPLES"),
+    passwordHash: md5('TUPLES'),
     friends: ['U2']
   }, {
     id: 'U2',
     name: 'C. Eeyo',
-    passwordHash: 'PROFITING', // md5('PROFITING'),
+    passwordHash: md5('PROFITING'),
     friends: []
   }],
   groups: [{

@@ -1,10 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+
 import connectDB from './connect-db';
+import { authenticationRoute } from './authenticate';
 
 const port = 3456;
 const app = express();
+
 
 app.listen(port, (err) => {
   if (err) {
@@ -25,6 +28,8 @@ app.use(
   bodyParser.urlencoded({ extended: true }), // for POST req
   bodyParser.json()
 );
+
+authenticationRoute(app);
 
 export const addNewTask = async (task) => {
   const db = await connectDB();

@@ -1,7 +1,10 @@
 import * as constants from '../../constants';
 
-export default (state = constants.defaultState.tasks, action) => {
+// export default (state = constants.defaultState.tasks, action) => {
+export default (state = [], action) => {
   switch (action.type) {
+    case constants.SET_STATE:
+      return action.state.tasks;
     case constants.CREATE_TASK:
       return [...state, {
         id: action.taskID,
