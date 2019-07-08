@@ -40,10 +40,7 @@ export const authenticationRoute = (app) => {
 
     // TODO: send pass as hash
     const hash = md5(password);
-
-    // TODO: store pass in DB as hash
-    // const passwordCorrect = hash === user.passwordHash;
-    const passwordCorrect = hash === md5(user.passwordHash);
+    const passwordCorrect = (hash === user.passwordHash);
 
     if (!passwordCorrect) {
       return res.status(500).send('Password incorrect');
