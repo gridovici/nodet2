@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import morgan from 'morgan';
 
 import connectDB from './connect-db';
 import { authenticationRoute } from './authenticate';
@@ -26,7 +27,8 @@ app.listen(port, (err) => {
 app.use(
   cors(),
   bodyParser.urlencoded({ extended: true }), // for POST req
-  bodyParser.json()
+  bodyParser.json(),
+  morgan('tiny')
 );
 
 authenticationRoute(app);

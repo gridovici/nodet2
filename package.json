@@ -15,7 +15,7 @@
     "course-start-dev": "concurrently \"npm run server\" \"npm run course-dev\"",
     "test-server": "babel-node src/server/server.spec",
     "test-connect": "babel-node src/server/connect-db",
-    "initialize": "babel-node src/server/initialize-db",
+    "initialize-db": "babel-node src/server/initialize-db",
     "lint:init": "eslint --init",
     "lint": "eslint . --fix"
   },
