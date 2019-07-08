@@ -10,7 +10,7 @@ async function assembleUserState(user) {
   const db = await connectDB();
 
   const tasks = await db.collection('tasks').find({ owner: user.id }).toArray();
-//   const comments = await db.collection('comments').find({ task: { $in: tasks.map(task => task.id) } }).toArray();
+  const comments = await db.collection('comments').find({ task: { $in: tasks.map(task => task.id) } }).toArray();
   const groups = await db.collection('groups').find({ owner: user.id }).toArray();
 //   const users = [
 //     await db.collection('users').findOne({ id: user.id }),
@@ -20,9 +20,9 @@ async function assembleUserState(user) {
   return {
     session: { authenticated: 'AUTHENTICATED', id: user.id },
     groups,
+    comments,
     tasks
     // users,
-    // comments
   };
 }
 
@@ -32,7 +32,6 @@ export const authenticationRoute = (app) => {
     const db = await connectDB();
     const collection = db.collection('users');
 
-    console.log('TRYING: ', username, password);
     const user = await collection.findOne({ name: username });
     console.log('SERVER: got user - ', user)
     if (!user) {
@@ -45,9 +44,7 @@ export const authenticationRoute = (app) => {
     // TODO: store pass in DB as hash
     // const passwordCorrect = hash === user.passwordHash;
     const passwordCorrect = hash === md5(user.passwordHash);
-    console.log('USER HASH: ', user.passwordHash)
-    console.log('HASH: ', hash)
-    console.log('correct pass? ', passwordCorrect)
+
     if (!passwordCorrect) {
       return res.status(500).send('Password incorrect');
     }

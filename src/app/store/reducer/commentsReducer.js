@@ -10,9 +10,8 @@ export default (state = [], action) => {
       return [...state, {
         owner, task, content, id
       }];
-      // TODO: add this
-    // case constants.SET_STATE:
-    //   return action.state.comments;
+    case constants.SET_STATE:
+      return action.state.comments;
     default:
       return state;
   }
