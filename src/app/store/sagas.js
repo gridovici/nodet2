@@ -12,6 +12,7 @@ export function* taskCreationSaga() {
   while (true) {
     // take = stop until specific action is dispatched
     const { groupID } = yield take(constants.REQUEST_TASK_CREATION);
+    // TODO: make dynamic
     const ownerID = 'U1';
     const taskID = uuid(); // done with random part
     // put - whatever action we pass in, send it to store
