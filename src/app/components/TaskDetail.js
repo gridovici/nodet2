@@ -9,6 +9,7 @@ export const TaskDetail = ({
   id,
   groups,
   task,
+  comments,
   isComplete,
   setTaskCompletion,
   setTaskGroup,
@@ -33,6 +34,13 @@ export const TaskDetail = ({
           <button>Done</button>
         </Link>
       </div>
+      <div>
+        {comments.map((comment, index) => (
+          <div key={comment.id}>
+          <div>Comment {index + 1}:</div>
+          <div >{comment.content}</div>
+          </div>))}
+      </div>
     </div>
 );
 
@@ -40,6 +48,7 @@ TaskDetail.propTypes = {
   task: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
   groups: PropTypes.array.isRequired,
+  comments: PropTypes.array.isRequired,
   isComplete: PropTypes.bool.isRequired,
   setTaskCompletion: PropTypes.func.isRequired,
   setTaskName: PropTypes.func.isRequired,
@@ -49,9 +58,12 @@ TaskDetail.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
   const task = state.tasks.find(item => item.id === id);
+  const comments = state.comments.filter(item => item.task === id);
+
   return {
     id,
     task,
+    comments,
     groups: state.groups,
     isComplete: task.isComplete
   };
