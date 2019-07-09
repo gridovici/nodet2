@@ -17,16 +17,21 @@ export function* taskCreationSaga() {
     const taskID = uuid(); // done with random part
     // put - whatever action we pass in, send it to store
     yield put(actions.createTask({ taskID, groupID, ownerID }));
-    const { res } = yield axios.post(`${url}/task/new`, {
-      task: {
-        id: taskID,
-        group: groupID,
-        isComplete: false,
-        name: 'New Task'
-      }
-    });
+    try {
+      const { res } = yield axios.post(`${url}/task/new`, {
+        task: {
+          id: taskID,
+          group: groupID,
+          owner: ownerID,
+          isComplete: false,
+          name: 'New Task'
+        }
+      });
 
-    console.info('Response: ', res);
+      console.info('Response: ', res);
+    } catch (err) {
+      console.error('Error creating task: ', err);
+    }
   }
 }
 
@@ -48,10 +53,17 @@ export function* taskModificationSaga() {
   }
 }
 
+export function* commentCreationSaga() {
+  while (true) {
+    const comment = yield take(constants.ADD_TASK_COMMENT);
+    axios.post(`${url}/comment/new`, { comment });
+  }
+}
+
 export function* userAuthenticationSaga() {
   while (true) {
     const { username, password } = yield take(constants.REQUEST_AUTHENTICATE_USER);
-    console.log('saga: ', username, password)
+    console.log('saga: ', username, password);
     try {
       const { data } = yield axios.post(`${url}/authenticate`, { username, password });
       console.log('DATA RECEIVED: ', data);
