@@ -9,6 +9,20 @@ import { authenticationRoute } from './authenticate';
 const port = 3456;
 const app = express();
 
+// TODO: add route guard
+// TODO: check dist folder <<- for production
+// TODO: remove views and hbs files || for PROD serve hbs from gulp
+// TODO: preprocessor ?
+// TODO: sinon, jest
+// TODO: SVG
+
+// TODO: check components in repo for consistency
+// TODO: add first 3 tasks
+
+// TODO: add TravisCI, GitHub, Heroku and ENV vars process.env, server localhost hardcoded remove
+// TODO: check fe, be and db in travis
+
+// TODO: address all todos
 
 app.listen(port, (err) => {
   if (err) {

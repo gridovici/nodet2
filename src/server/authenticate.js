@@ -33,7 +33,7 @@ export const authenticationRoute = (app) => {
     const collection = db.collection('users');
 
     const user = await collection.findOne({ name: username });
-    console.log('SERVER: got user - ', user)
+
     if (!user) {
       return res.status(500).send('User not found');
     }
@@ -54,10 +54,11 @@ export const authenticationRoute = (app) => {
     });
 
     const state = await assembleUserState(user);
-    // const state = {};
 
     res.send({ token, state });
   });
+
+  // TODO: add create user
 
   //   app.post('/user/create', async (req, res) => {
   //     const { username, password } = req.body;

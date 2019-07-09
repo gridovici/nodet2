@@ -6,13 +6,23 @@ import * as actions from '../actions';
 import * as constants from '../constants';
 
 const Login = ({ authenticateUser, authenticated }) => (
-    <div>
+    <div className="card p-3 col-6">
       <h2>Please Login</h2>
       <form onSubmit={authenticateUser}>
-        <input type="text" placeholder="username" name="username" defaultValue="Dev" />
-        <input type="password" placeholder="password" name="password" defaultValue="TUPLES" />
+        <input
+          className="form-control"
+          type="text"
+          placeholder="username"
+          name="username"
+          defaultValue="Dev" />
+        <input
+          className="form-control p-2"
+          type="password"
+          placeholder="password"
+          name="password"
+          defaultValue="TUPLES" />
         {authenticated === constants.NOT_AUTHENTICATED ? <p>Login incorrect</p> : null}
-        <button type="submit">Login</button>
+        <button type="submit" className="form-control btn btn-primary">Login</button>
       </form>
     </div>
 );

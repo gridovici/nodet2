@@ -8,16 +8,20 @@ import { requestTaskCreation } from '../actions';
 export const TaskList = ({
   tasks, name, groupID, createNewTask
 }) => (
-    <div>
+    <div className="card p-2 m-2">
       <h3>{name}</h3>
       <div>
           {tasks.map(task => (
             <Link key={task.id} to={`task/${task.id}`}>
-              <div>{task.name}</div>
+              <div className="card p-2 mt-2">{task.name}</div>
             </Link>
           ))}
       </div>
-      <button onClick={() => createNewTask(groupID)}>Add Task</button>
+      <button
+        className="btn btn-primary ml-2"
+        onClick={() => createNewTask(groupID)}>
+        Add Task
+      </button>
     </div>
 );
 

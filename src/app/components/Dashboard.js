@@ -5,10 +5,13 @@ import { connect } from 'react-redux';
 import TaskListContainer from './TaskList';
 
 export const Dashboard = ({ groups }) => (
-    <div>
-         <h2>My Dashboard</h2>
+    <div className="row">
         {groups.map(group => (
-            <TaskListContainer key={group.id} id={group.id} name={group.name}/>
+            <TaskListContainer
+              key={group.id}
+              id={group.id}
+              className="column"
+              name={group.name}/>
         ))}
     </div>
 );
