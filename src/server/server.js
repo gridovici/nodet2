@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import connectDB from './connect-db';
 import { authenticationRoute } from './authenticate';
 
-const port = 3456;
+const port = process.env.PORT || 3456;
 const app = express();
 
 // TODO: add route guard

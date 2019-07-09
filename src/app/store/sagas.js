@@ -42,7 +42,6 @@ export function* taskModificationSaga() {
       constants.SET_TASK_GROUP,
       constants.SET_TASK_NAME,
       constants.SET_TASK_COMPLETE]);
-      console.log('tasking...',task)
     axios.post(`${url}/task/update`, {
       task: {
         id: task.taskID,
