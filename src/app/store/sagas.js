@@ -18,11 +18,10 @@ export function* taskCreationSaga() {
     // put - whatever action we pass in, send it to store
     yield put(actions.createTask({ taskID, groupID, ownerID }));
     try {
-      const { res } = yield axios.post(`${url}/task/new`, {
+      const res = yield axios.post(`${url}/task/new`, {
         task: {
           id: taskID,
           group: groupID,
-          owner: ownerID,
           isComplete: false,
           name: 'New Task'
         }
