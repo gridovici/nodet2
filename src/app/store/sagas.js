@@ -22,6 +22,7 @@ export function* taskCreationSaga() {
         task: {
           id: taskID,
           group: groupID,
+          owner: ownerID,
           isComplete: false,
           name: 'New Task'
         }

@@ -18,7 +18,7 @@ export const TaskList = ({
           ))}
       </div>
       <button
-        className="btn btn-primary ml-2"
+        className="btn btn-primary mt-2"
         onClick={() => createNewTask(groupID)}>
         Add Task
       </button>

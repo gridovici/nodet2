@@ -16,13 +16,13 @@ const Login = ({ authenticateUser, authenticated }) => (
           name="username"
           defaultValue="Dev" />
         <input
-          className="form-control p-2"
+          className="form-control p-2 mt-2"
           type="password"
           placeholder="password"
           name="password"
           defaultValue="TUPLES" />
         {authenticated === constants.NOT_AUTHENTICATED ? <p>Login incorrect</p> : null}
-        <button type="submit" className="form-control btn btn-primary">Login</button>
+        <button type="submit" className="form-control btn btn-primary mt-2">Login</button>
       </form>
     </div>
 );
