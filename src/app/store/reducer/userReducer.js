@@ -1,6 +1,5 @@
 import * as constants from '../../constants';
 
-// export default (state = constants.defaultState.users, action) => {
 export default (state = [], action) => {
   // TODO: fix this
   switch (action.type) {

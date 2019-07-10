@@ -1,7 +1,6 @@
 import * as constants from '../../constants';
 
 // TODO: check this
-// export default (state = constants.defaultState.session, action) => {
 export default (state = {}, action) => {
   const { type, authenticated } = action;
   switch (type) {

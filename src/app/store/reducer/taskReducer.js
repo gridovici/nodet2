@@ -1,6 +1,5 @@
 import * as constants from '../../constants';
 
-// export default (state = constants.defaultState.tasks, action) => {
 export default (state = [], action) => {
   switch (action.type) {
     case constants.SET_STATE:

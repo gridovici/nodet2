@@ -15,6 +15,14 @@ export const SET_STATE = 'SET_STATE';
 export const USERNAME_RESERVED = 'USERNAME_RESERVED';
 export const REQUEST_USER_ACCOUNT_CREATION = 'REQUEST_USER_ACCOUNT_CREATION';
 
+// const defaultState = {
+//   session: {},
+//   comments: [],
+//   users: [],
+//   groups: [],
+//   tasks: []
+// };
+
 export const defaultState = {
   session: {
     // authenticated: false

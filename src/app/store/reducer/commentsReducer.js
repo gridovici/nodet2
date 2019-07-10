@@ -1,6 +1,5 @@
 import * as constants from '../../constants';
 
-// export default (state = constants.defaultState.comments, action) => {
 export default (state = [], action) => {
   const {
     owner, task, content, id
