@@ -14,7 +14,8 @@ async function assembleUserState(user) {
   const groups = await db.collection('groups').find({ owner: user.id }).toArray();
   //   const users = [
   //     await db.collection('users').findOne({ id: user.id }),
-  //     ...await db.collection('users').find({ id: { $in: [...tasks, comments].map(x => x.owner) } }).toArray()
+  // ...await db.collection('users').
+  //  find({ id: { $in: [...tasks, comments].map(x => x.owner) } }).toArray()
   //   ];
 
   return {
@@ -27,6 +28,7 @@ async function assembleUserState(user) {
 }
 
 export const authenticationRoute = (app) => {
+  // eslint-disable-next-line consistent-return
   app.post('/authenticate', async (req, res) => {
     const { username, password } = req.body;
     const db = await connectDB();
