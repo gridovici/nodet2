@@ -4,8 +4,10 @@
   "description": "Node example app",
   "main": "src/index.js",
   "scripts": {
+    "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp --require @babel/register --gulpfile tasks",
+    "start": "npm run server",
+    "start-gulp": "gulp --require @babel/register --gulpfile tasks",
     "start-webpack": "rm -rf ./dist && webpack",
     "start-webpack-dev": "npm run start-webpack && webpack-dev-server --port=6789 --open",
     "server": "babel-node src/server/server",

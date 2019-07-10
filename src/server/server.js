@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import path from 'path';
 
 import connectDB from './connect-db';
 import { authenticationRoute } from './authenticate';
@@ -46,6 +47,14 @@ app.use(
 );
 
 authenticationRoute(app);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.resolve(__dirname, '../../dist')));
+  app.get('/*', (req, res) => {
+    // Not use webpack dev server in prod
+    res.sendFile(path.resolve('index.html'));
+  });
+}
 
 export const addNewTask = async (task) => {
   const db = await connectDB();
