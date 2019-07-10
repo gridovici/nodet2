@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in, no-await-in-loop, no-restricted-syntax */
 import { defaultState } from '../app/constants';
 import connectDB from './connect-db';
 
