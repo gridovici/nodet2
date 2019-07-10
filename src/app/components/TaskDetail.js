@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import * as actions from '../actions';
 
-export const TaskDetail = ({
+export const TaskDetailComponent = ({
   id,
   groups,
   task,
@@ -48,7 +48,7 @@ export const TaskDetail = ({
     </div>
 );
 
-TaskDetail.propTypes = {
+TaskDetailComponent.propTypes = {
   task: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
   groups: PropTypes.array.isRequired,
@@ -73,11 +73,12 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+// TODO: investigate setTaskCompletion taskId from ownProps
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { id } = ownProps.match.params;
   return {
-    setTaskCompletion(id, isComplete) {
-      dispatch(actions.setTaskCompletion(id, isComplete));
+    setTaskCompletion(taskId, isComplete) {
+      dispatch(actions.setTaskCompletion(taskId, isComplete));
     },
     setTaskGroup(e) {
       dispatch(actions.setTaskGroup(id, e.target.value));
@@ -88,4 +89,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskDetailComponent);

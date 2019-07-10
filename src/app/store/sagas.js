@@ -80,20 +80,20 @@ export function* userAuthenticationSaga() {
 }
 
 
-// export function* userAccountCreationSaga() {
-//   while (true) {
-//     const { username, password } = yield take(constants.REQUEST_USER_ACCOUNT_CREATION);
-//     try {
-//       const { data } = yield axios.post(`${url}/user/create`, { username, password });
-//       console.log(data);
+export function* userAccountCreationSaga() {
+  while (true) {
+    const { username, password } = yield take(constants.REQUEST_USER_ACCOUNT_CREATION);
+    try {
+      const { data } = yield axios.post(`${url}/user/create`, { username, password });
+      console.log(data);
 
-//       yield put(actions.setState({ ...data.state, session: { id: data.userID } }));
-//       yield put(actions.processAuthenticateUser(constants.AUTHENTICATED));
+      yield put(actions.setState({ ...data.state, session: { id: data.userID } }));
+      yield put(actions.processAuthenticateUser(constants.AUTHENTICATED));
 
-//       history.push('/dashboard');
-//     } catch (e) {
-//       console.error('Error', e);
-//       yield put(actions.processAuthenticateUser(constants.USERNAME_RESERVED));
-//     }
-//   }
-// }
+      history.push('/dashboard');
+    } catch (e) {
+      console.error('Error', e);
+      yield put(actions.processAuthenticateUser(constants.USERNAME_RESERVED));
+    }
+  }
+}

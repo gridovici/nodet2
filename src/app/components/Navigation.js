@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Navigation = () => (
+export const NavigationComponent = () => (
     <div>
         <Link to="/dashboard">
             <h1>
@@ -12,4 +12,4 @@ const Navigation = () => (
     </div>
 );
 
-export default connect(state => state)(Navigation);
+export default connect(state => state)(NavigationComponent);

@@ -12,10 +12,10 @@ async function assembleUserState(user) {
   const tasks = await db.collection('tasks').find({ owner: user.id }).toArray();
   const comments = await db.collection('comments').find({ task: { $in: tasks.map(task => task.id) } }).toArray();
   const groups = await db.collection('groups').find({ owner: user.id }).toArray();
-//   const users = [
-//     await db.collection('users').findOne({ id: user.id }),
-//     ...await db.collection('users').find({ id: { $in: [...tasks, comments].map(x => x.owner) } }).toArray()
-//   ];
+  //   const users = [
+  //     await db.collection('users').findOne({ id: user.id }),
+  //     ...await db.collection('users').find({ id: { $in: [...tasks, comments].map(x => x.owner) } }).toArray()
+  //   ];
 
   return {
     session: { authenticated: 'AUTHENTICATED', id: user.id },
@@ -32,6 +32,7 @@ export const authenticationRoute = (app) => {
     const db = await connectDB();
     const collection = db.collection('users');
 
+    // TODO: add try/catch
     const user = await collection.findOne({ name: username });
 
     if (!user) {
@@ -60,34 +61,36 @@ export const authenticationRoute = (app) => {
 
   // TODO: add create user
 
-  //   app.post('/user/create', async (req, res) => {
-  //     const { username, password } = req.body;
-  //     console.log(username, password);
-  //     const db = await connectDB();
-  //     const collection = db.collection('users');
-  //     const user = await collection.findOne({ name: username });
-  //     if (user) {
-  //       res.status(500).send({ message: 'A user with that account name already exists.' });
-  //       return;
-  //     }
+  app.post('/user/create', async (req, res) => {
+    const { username, password } = req.body;
+    console.log(username, password);
 
-  //         let userID = uuid();
-  //     const groupID = uuid();
+    // TODO: add try/catch
+    const db = await connectDB();
+    const collection = db.collection('users');
+    const user = await collection.findOne({ name: username });
+    if (user) {
+      res.status(500).send({ message: 'A user with that account name already exists.' });
+      return;
+    }
 
-  //     await collection.insertOne({
-  //       name: username,
-  //       id: userID,
-  //       passwordHash: md5(password)
-  //     });
+    const userID = uuid();
+    const groupID = uuid();
 
-  //     await db.collection('groups').insertOne({
-  //       id: groupID,
-  //       owner: userID,
-  //       name: 'To Do'
-  //     });
+    await collection.insertOne({
+      name: username,
+      id: userID,
+      passwordHash: md5(password)
+    });
 
-  //     const state = await assembleUserState({ id: userID, name: username });
+    await db.collection('groups').insertOne({
+      id: groupID,
+      owner: userID,
+      name: 'To Do'
+    });
 
-//     res.status(200).send({ userID, state });
-//   });
+    const state = await assembleUserState({ id: userID, name: username });
+
+    res.status(200).send({ userID, state });
+  });
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import * as actions from '../actions';
 import * as constants from '../constants';
@@ -8,6 +9,11 @@ import * as constants from '../constants';
 const Login = ({ authenticateUser, authenticated }) => (
     <div className="card p-3 col-6">
       <h2>Please Login</h2>
+      <h3>
+            <Link to="signup">
+                No account? Sign up.
+            </Link>
+        </h3>
       <form onSubmit={authenticateUser}>
         <input
           className="form-control"

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import TaskListContainer from './TaskList';
 
-export const Dashboard = ({ groups }) => (
+export const DashboardComponent = ({ groups }) => (
     <div className="row">
         {groups.map(group => (
             <TaskListContainer
@@ -16,7 +16,7 @@ export const Dashboard = ({ groups }) => (
     </div>
 );
 
-Dashboard.propTypes = {
+DashboardComponent.propTypes = {
   groups: PropTypes.array.isRequired
 };
 
@@ -26,4 +26,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(DashboardComponent);
