@@ -21,8 +21,8 @@ const Main = () => (
         <Provider store={store}>
             <div className="container mt-3">
                 <Navigation />
-                <Route exact path="/" component={Login} />
-                <Route exact path="/signup" component={SignUp}/>
+                <Route exact path="/" render={() => <Login />} />
+                <Route exact path="/signup" render={() => <SignUp />}/>
                 <Route
                     exact
                     path="/dashboard"

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 import * as constants from '../constants';
 
-const Login = ({ authenticateUser, authenticated }) => (
+export const LoginComponent = ({ authenticateUser, authenticated }) => (
     <div className="card p-3 col-6">
       <h2>Please Login</h2>
       <h3>
@@ -33,7 +33,7 @@ const Login = ({ authenticateUser, authenticated }) => (
     </div>
 );
 
-Login.propTypes = {
+LoginComponent.propTypes = {
   authenticateUser: PropTypes.func.isRequired,
   authenticated: PropTypes.string
 };
@@ -51,4 +51,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);

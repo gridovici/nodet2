@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import * as constants from '../constants';
 import * as actions from '../actions';
 
-export const SignupComponent = ({ requestCreateUserAccount, authenticated }) => <div className="card p-3 col-6">
+export const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
+  <div className="card p-3 col-6">
         <h2>
             Complete the following form to create a new account.
         </h2>
@@ -25,8 +26,8 @@ export const SignupComponent = ({ requestCreateUserAccount, authenticated }) => 
               : null}
             <button type="submit" className="form-control mt-2 btn btn-primary">Sign Up</button>
         </form>
-
-    </div>;
+  </div>
+);
 
 SignupComponent.propTypes = {
   requestCreateUserAccount: PropTypes.func.isRequired,
