@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { requestTaskCreation } from '../actions';
 
-export const TaskList = ({
+export const TaskListComponent = ({
   tasks, name, groupID, createNewTask
 }) => (
     <div className="card p-2 m-2">
@@ -25,7 +25,7 @@ export const TaskList = ({
     </div>
 );
 
-TaskList.propTypes = {
+TaskListComponent.propTypes = {
   tasks: PropTypes.array.isRequired,
   groupID: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -44,4 +44,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskListComponent);
