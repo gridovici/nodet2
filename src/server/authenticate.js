@@ -77,7 +77,6 @@ export const authenticationRoute = (app) => {
     }
 
     const userID = uuid();
-    const groupID = uuid();
 
     await collection.insertOne({
       name: username,
@@ -86,9 +85,22 @@ export const authenticationRoute = (app) => {
     });
 
     await db.collection('groups').insertOne({
-      id: groupID,
+      id: uuid(),
       owner: userID,
       name: 'To Do'
+    });
+
+    // TODO: check this once again to create one API call
+    await db.collection('groups').insertOne({
+      id: uuid(),
+      owner: userID,
+      name: 'Doing'
+    });
+
+    await db.collection('groups').insertOne({
+      id: uuid(),
+      owner: userID,
+      name: 'Done'
     });
 
     const state = await assembleUserState({ id: userID, name: username });
