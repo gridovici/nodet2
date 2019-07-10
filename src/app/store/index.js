@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax, guard-for-in */
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
@@ -19,7 +20,6 @@ import reducer from './reducer';
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
-  // (state = defaultState, action) => state,
   combineReducers(reducer),
   applyMiddleware(createLogger(), sagaMiddleware)
 );

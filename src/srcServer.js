@@ -23,16 +23,16 @@ app.engine('hbs', hbs({
   partialsDir: path.join(__dirname, 'views/partials/')
 }));
 
-app.get('/api', (req, res, next) => {
-  res.send('Giving you some API');
-  // res.render('hello', { layout: 'default' });
-});
+// app.get('/api', (req, res, next) => {
+//   res.send('Giving you some API');
+//   // res.render('hello', { layout: 'default' });
+// });
 
 
-app.get('/*', (req, res, next) => {
-  res.send('Rendering index.html');
-  // res.render('home');
-});
+// app.get('/*', (req, res, next) => {
+//   res.send('Rendering index.html');
+//   // res.render('home');
+// });
 
 app.listen(port, (err) => {
   if (err) {

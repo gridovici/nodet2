@@ -38,9 +38,8 @@ const mapStateToProps = (state, ownProps) => ({
   tasks: state.tasks.filter(task => task.group === ownProps.id)
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   createNewTask(id) {
-    console.log('Creating new task... ', id);
     dispatch(requestTaskCreation(id));
   }
 });
