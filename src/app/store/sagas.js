@@ -1,5 +1,5 @@
-// import { take, put, select } from 'redux-saga/effects';
-import { take, put } from 'redux-saga/effects';
+import { take, put, select } from 'redux-saga/effects';
+// import { take, put } from 'redux-saga/effects';
 import uuid from 'uuid';
 import axios from 'axios';
 
@@ -9,13 +9,11 @@ import * as constants from '../constants';
 
 const url = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3456';
 
-// TODO: compare to GH dstern
 export function* taskCreationSaga() {
   while (true) {
     // take = stop until specific action is dispatched
     const { groupID } = yield take(constants.REQUEST_TASK_CREATION);
-    // TODO: make ownerID dynamic
-    const ownerID = 'U1';
+    const ownerID = yield select(state => state.session.id);
     const taskID = uuid(); // done with random part
     // put - whatever action we pass in, send it to store
     yield put(actions.createTask({ taskID, groupID, ownerID }));
@@ -66,11 +64,10 @@ export function* userAuthenticationSaga() {
   while (true) {
     const { username, password } = yield take(constants.REQUEST_AUTHENTICATE_USER);
     try {
-      // TODO: md5 password
       const { data } = yield axios.post(`${url}/authenticate`, { username, password });
       yield put(actions.setState(data.state));
       yield put(actions.processAuthenticateUser(constants.AUTHENTICATED, {
-        id: 'U1', // TODO:... get ID from response
+        id: data.state.session.id,
         token: data.token
       }));
       history.push('/dashboard');

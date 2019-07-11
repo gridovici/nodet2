@@ -10,7 +10,7 @@ import { authenticationRoute } from './authenticate';
 const port = process.env.PORT || 3456;
 const app = express();
 
-// TODO: add route guard
+// TODO: add route guard ?
 // TODO: check dist folder <<- for production
 // TODO: remove views and hbs files || for PROD serve hbs from gulp
 // TODO: preprocessor ?
@@ -89,5 +89,13 @@ app.post('/task/new', async (req, res) => {
 app.post('/task/update', async (req, res) => {
   const { task } = req.body;
   await updateTask(task);
+  res.status(200).send();
+});
+
+app.post('/comment/new', async (req, res) => {
+  const { comment } = req.body;
+  const db = await connectDB();
+  const collection = db.collection('comments');
+  await collection.insertOne(comment);
   res.status(200).send();
 });

@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import uuid from 'uuid';
 import md5 from 'md5';
+
 import connectDB from './connect-db';
 // import { assembleUserState } from './utility';
 
@@ -31,80 +32,78 @@ export const authenticationRoute = (app) => {
   // eslint-disable-next-line consistent-return
   app.post('/authenticate', async (req, res) => {
     const { username, password } = req.body;
-    const db = await connectDB();
-    const collection = db.collection('users');
 
-    // TODO: add try/catch
-    const user = await collection.findOne({ name: username });
+    try {
+      const db = await connectDB();
+      const collection = db.collection('users');
+      const user = await collection.findOne({ name: username });
 
-    if (!user) {
-      return res.status(500).send('User not found');
+      if (!user) {
+        return res.status(500).send('User not found');
+      }
+
+      const hash = md5(password);
+      const passwordCorrect = (hash === user.passwordHash);
+
+      if (!passwordCorrect) {
+        return res.status(500).send('Password incorrect');
+      }
+
+      const token = uuid();
+
+      authenticationTokens.push({
+        token,
+        userID: user.id
+      });
+
+      const state = await assembleUserState(user);
+
+      res.send({ token, state });
+    } catch (err) {
+      res.status(500).send({ message: err.message });
     }
-
-    // TODO: send pass as hash
-    const hash = md5(password);
-    const passwordCorrect = (hash === user.passwordHash);
-
-    if (!passwordCorrect) {
-      return res.status(500).send('Password incorrect');
-    }
-
-    const token = uuid();
-
-    authenticationTokens.push({
-      token,
-      userID: user.id
-    });
-
-    const state = await assembleUserState(user);
-
-    res.send({ token, state });
   });
-
-  // TODO: add create user
 
   app.post('/user/create', async (req, res) => {
     const { username, password } = req.body;
-    console.log(username, password);
 
-    // TODO: add try/catch
-    const db = await connectDB();
-    const collection = db.collection('users');
-    const user = await collection.findOne({ name: username });
-    if (user) {
-      res.status(500).send({ message: 'A user with that account name already exists.' });
-      return;
+    try {
+      const db = await connectDB();
+      const userCollection = db.collection('users');
+      const user = await userCollection.findOne({ name: username });
+
+      if (user) {
+        res.status(500).send({ message: 'A user with that account name already exists.' });
+        return;
+      }
+
+      const userID = uuid();
+
+      await userCollection.insertOne({
+        name: username,
+        id: userID,
+        passwordHash: md5(password)
+      });
+
+      await db.collection('groups').insertMany([{
+        id: uuid(),
+        owner: userID,
+        name: 'To Do'
+      }, {
+        id: uuid(),
+        owner: userID,
+        name: 'Doing'
+      }, {
+        id: uuid(),
+        owner: userID,
+        name: 'Done'
+      }]);
+
+      const state = await assembleUserState({ id: userID, name: username });
+
+      res.status(200).send({ userID, state });
+    } catch (err) {
+      res.status(500).send({ message: err.message });
     }
-
-    const userID = uuid();
-
-    await collection.insertOne({
-      name: username,
-      id: userID,
-      passwordHash: md5(password)
-    });
-
-    await db.collection('groups').insertOne({
-      id: uuid(),
-      owner: userID,
-      name: 'To Do'
-    });
-
-    // TODO: check this once again to create one API call
-    await db.collection('groups').insertOne({
-      id: uuid(),
-      owner: userID,
-      name: 'Doing'
-    });
-
-    await db.collection('groups').insertOne({
-      id: uuid(),
-      owner: userID,
-      name: 'Done'
-    });
-
-    const state = await assembleUserState({ id: userID, name: username });
-
-    res.status(200).send({ userID, state });
   });
 };
