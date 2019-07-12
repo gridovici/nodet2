@@ -83,13 +83,14 @@ export const updateTask = async (task) => {
 
 app.post('/task/new', async (req, res) => {
   const { task } = req.body;
-  console.log(chalk.blue('Creating new task: ', task));
+  console.log(chalk.blue('Creating new task: '), task);
   await addNewTask(task);
   res.status(200).send();
 });
 
 app.post('/task/update', async (req, res) => {
   const { task } = req.body;
+  console.log(chalk.blue('Updating task: '), task);
   await updateTask(task);
   res.status(200).send();
 });
