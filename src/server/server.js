@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import path from 'path';
+import chalk from 'chalk';
 
 import connectDB from './connect-db';
 import { authenticationRoute } from './authenticate';
@@ -82,6 +83,7 @@ export const updateTask = async (task) => {
 
 app.post('/task/new', async (req, res) => {
   const { task } = req.body;
+  console.log(chalk.blue('Creating new task: ', task));
   await addNewTask(task);
   res.status(200).send();
 });

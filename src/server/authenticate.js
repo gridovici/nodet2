@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import uuid from 'uuid';
 import md5 from 'md5';
+import chalk from 'chalk';
 
 import connectDB from './connect-db';
 // import { assembleUserState } from './utility';
@@ -31,6 +32,7 @@ async function assembleUserState(user) {
 export const authenticationRoute = (app) => {
   // eslint-disable-next-line consistent-return
   app.post('/authenticate', async (req, res) => {
+    console.log(chalk.yellow.bold('Received REQ!'));
     const { username, password } = req.body;
 
     try {
