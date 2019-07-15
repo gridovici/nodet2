@@ -3,9 +3,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import path from 'path';
-import chalk from 'chalk';
 
-import connectDB from './connect-db';
+import * as routes from './routes';
 import { authenticationRoute } from './authenticate';
 
 const port = process.env.PORT || 3456;
@@ -35,10 +34,6 @@ app.listen(port, (err) => {
   }
 });
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World');
-// });
-
 // Add plugins
 app.use(
   cors(),
@@ -57,48 +52,8 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-export const addNewTask = async (task) => {
-  const db = await connectDB();
-  const collection = db.collection('tasks');
-  await collection.insertOne(task);
-};
+app.post('/task/new', routes.taskNew);
 
-export const updateTask = async (task) => {
-  const {
-    id, group, isComplete, name
-  } = task;
-  const db = await connectDB();
-  const collection = db.collection('tasks');
+app.post('/task/update', routes.taskUpdate);
 
-  if (group) {
-    await collection.updateOne({ id }, { $set: { group } });
-  }
-  if (name) {
-    await collection.updateOne({ id }, { $set: { name } });
-  }
-  if (isComplete !== undefined) {
-    await collection.updateOne({ id }, { $set: { isComplete } });
-  }
-};
-
-app.post('/task/new', async (req, res) => {
-  const { task } = req.body;
-  console.log(chalk.blue('Creating new task: '), task);
-  await addNewTask(task);
-  res.status(200).send();
-});
-
-app.post('/task/update', async (req, res) => {
-  const { task } = req.body;
-  console.log(chalk.blue('Updating task: '), task);
-  await updateTask(task);
-  res.status(200).send();
-});
-
-app.post('/comment/new', async (req, res) => {
-  const { comment } = req.body;
-  const db = await connectDB();
-  const collection = db.collection('comments');
-  await collection.insertOne(comment);
-  res.status(200).send();
-});
+app.post('/comment/new', routes.commentNew);
