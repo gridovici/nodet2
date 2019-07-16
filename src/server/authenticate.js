@@ -1,9 +1,9 @@
 /* eslint-disable import/prefer-default-export */
-import uuid from 'uuid';
-import md5 from 'md5';
-import chalk from 'chalk';
+const uuid = require('uuid');
+const md5 = require('md5');
+const chalk = require('chalk');
 
-import connectDB from './connect-db';
+const { connectDB } = require('./connect-db');
 // import { assembleUserState } from './utility';
 
 const authenticationTokens = [];
@@ -29,7 +29,7 @@ async function assembleUserState(user) {
   };
 }
 
-export const authenticationRoute = (app) => {
+const authenticationRoute = (app) => {
   // eslint-disable-next-line consistent-return
   app.post('/authenticate', async (req, res) => {
     console.log(chalk.yellow.bold('Received REQ!'));
@@ -62,6 +62,7 @@ export const authenticationRoute = (app) => {
 
       res.send({ token, state });
     } catch (err) {
+      console.log('NO AUTH!: ', err.message);
       res.status(500).send({ message: err.message });
     }
   });
@@ -108,4 +109,8 @@ export const authenticationRoute = (app) => {
       res.status(500).send({ message: err.message });
     }
   });
+};
+
+module.exports = {
+  authenticationRoute
 };

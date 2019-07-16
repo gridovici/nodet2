@@ -1,6 +1,6 @@
 /* eslint-disable guard-for-in, no-await-in-loop, no-restricted-syntax */
-import { defaultState } from '../app/constants';
-import connectDB from './connect-db';
+const { defaultState } = require('../app/constants');
+const connectDB = require('./connect-db');
 
 async function initializeDB() {
   const db = await connectDB();

@@ -1,11 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import path from 'path';
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const path = require('path');
 
-import * as routes from './routes';
-import { authenticationRoute } from './authenticate';
+const routes = require('./routes');
+const { authenticationRoute } = require('./authenticate');
 
 const port = process.env.PORT || 3456;
 const app = express();
