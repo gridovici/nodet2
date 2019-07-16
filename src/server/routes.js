@@ -27,7 +27,7 @@ const updateTask = async (task) => {
 
 const taskNew = async (req, res) => {
   const { task } = req.body;
-  console.log(chalk.blue('Creating new task: '), task);
+  console.log(chalk.green('Creating new task: '), task);
   await addNewTask(task);
   res.status(200).send();
 };
