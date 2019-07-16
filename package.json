@@ -5,9 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test-es": "./node_modules/.bin/mocha --require @babel/register \"tests/**/*.js\"",
-    "mocha-test": "mocha --require @babel/register tests/**/*.js",
+    "test": "mocha --require @babel/register tests/**/*.js",
     "start": "npm run server",
     "start-gulp": "gulp --require @babel/register --gulpfile tasks",
     "start-webpack": "rm -rf ./dist && webpack",
