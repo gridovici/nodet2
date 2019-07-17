@@ -2,16 +2,23 @@
 const { MongoClient } = require('mongodb');
 
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/organizer';
-let db = null;
 
-async function connectDB() {
-  if (db) return db;
-  const client = await MongoClient.connect(url, { useNewUrlParser: true });
-  db = client.db();
-  console.info('DB created and retrieved: ', db);
-  return db;
+class ConnectDB {
+  constructor() {
+    this.db = null;
+    this.connectDB = this.connectDB.bind(this);
+  }
+
+  async connectDB() {
+    if (this.db) return this.db;
+    const client = await MongoClient.connect(url, { useNewUrlParser: true });
+    this.db = client.db();
+    console.info('DB created and retrieved: ', this.db);
+    return this.db;
+  }
 }
 
-module.exports = {
-  connectDB
-};
+module.exports = new ConnectDB();
+// module.exports = {
+//   connectDB
+// };

@@ -1,56 +1,64 @@
 const chalk = require('chalk');
-const connectDB = require('./connect-db');
+const connect = require('./connect-db');
 
-const addNewTask = async (task) => {
-  const db = await connectDB();
-  const collection = db.collection('tasks');
-  await collection.insertOne(task);
-};
+class Routes {
+  // constructor() {
+  //   this.taskNew = this.taskNew.bind(this);
+  //   this.taskUpdate = this.taskUpdate.bind(this);
+  // }
 
-const updateTask = async (task) => {
-  const {
-    id, group, isComplete, name
-  } = task;
-  const db = await connectDB();
-  const collection = db.collection('tasks');
-
-  if (group) {
-    await collection.updateOne({ id }, { $set: { group } });
+  static async addNewTask(task) {
+    const db = await connect.connectDB();
+    const collection = db.collection('tasks');
+    await collection.insertOne(task);
   }
-  if (name) {
-    await collection.updateOne({ id }, { $set: { name } });
+
+  static async updateTask(task) {
+    const {
+      id, group, isComplete, name
+    } = task;
+    const db = await connect.connectDB();
+    const collection = db.collection('tasks');
+
+    if (group) {
+      await collection.updateOne({ id }, { $set: { group } });
+    }
+    if (name) {
+      await collection.updateOne({ id }, { $set: { name } });
+    }
+    if (isComplete !== undefined) {
+      await collection.updateOne({ id }, { $set: { isComplete } });
+    }
   }
-  if (isComplete !== undefined) {
-    await collection.updateOne({ id }, { $set: { isComplete } });
+
+  static async taskNew(req, res) {
+    const { task } = req.body;
+    console.log(chalk.green('Creating new task: '), task);
+    await this.addNewTask(task);
+    res.status(200).send();
   }
-};
 
-const taskNew = async (req, res) => {
-  const { task } = req.body;
-  console.log(chalk.green('Creating new task: '), task);
-  await addNewTask(task);
-  res.status(200).send();
-};
+  static async taskUpdate(req, res) {
+    const { task } = req.body;
+    console.log(chalk.blue('Updating task: '), task);
+    await this.updateTask(task);
+    res.status(200).send();
+  }
 
-const taskUpdate = async (req, res) => {
-  const { task } = req.body;
-  console.log(chalk.blue('Updating task: '), task);
-  await updateTask(task);
-  res.status(200).send();
-};
+  static async commentNew(req, res) {
+    const { comment } = req.body;
+    const db = await connect.connectDB();
+    const collection = db.collection('comments');
+    await collection.insertOne(comment);
+    res.status(200).send();
+  }
+}
 
-const commentNew = async (req, res) => {
-  const { comment } = req.body;
-  const db = await connectDB();
-  const collection = db.collection('comments');
-  await collection.insertOne(comment);
-  res.status(200).send();
-};
-
-module.exports = {
-  addNewTask,
-  updateTask,
-  taskNew,
-  taskUpdate,
-  commentNew
-};
+module.exports = Routes;
+// module.exports = {
+//   addNewTask,
+//   updateTask,
+//   taskNew,
+//   taskUpdate,
+//   commentNew
+// };

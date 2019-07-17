@@ -33,6 +33,7 @@ const authenticationRoute = (app) => {
   // eslint-disable-next-line consistent-return
   app.post('/authenticate', async (req, res) => {
     console.log(chalk.yellow.bold('Received REQ!'));
+    console.log(connectDB);
     const { username, password } = req.body;
 
     try {
