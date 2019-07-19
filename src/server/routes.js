@@ -2,7 +2,7 @@
 const chalk = require('chalk');
 const uuid = require('uuid');
 const md5 = require('md5');
-const { connectDB } = require('./connect-db');
+const connect = require('./connect-db');
 
 class Routes {
   constructor() {
@@ -14,7 +14,7 @@ class Routes {
   }
 
   async addNewTask(task) {
-    const db = await connectDB();
+    const db = await connect.connectDB();
     const collection = db.collection('tasks');
     await collection.insertOne(task);
   }
@@ -23,7 +23,7 @@ class Routes {
     const {
       id, group, isComplete, name
     } = task;
-    const db = await connectDB();
+    const db = await connect.connectDB();
     const collection = db.collection('tasks');
 
     if (group) {

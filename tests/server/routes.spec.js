@@ -3,12 +3,11 @@ import sinon from 'sinon';
 import routes from '../../src/server/routes';
 import connect from '../../src/server/connect-db';
 
-let stub = null;
+let stubDB = null;
 
 describe('test routes', () => {
   beforeEach(() => {
-    stub = sinon.stub(connect, 'connectDB');
-    stub.returns(
+    stubDB = sinon.stub(connect, 'connectDB').returns(
       Promise.resolve({
         collection: sinon.stub().returns({ insertOne: sinon.stub() })
       })
@@ -16,22 +15,24 @@ describe('test routes', () => {
   });
 
   afterEach(() => {
-    stub.restore();
+    stubDB.restore();
   });
 
   // it('checks equality', () => {
   //   expect(true).to.be.true;
   // });
 
-//   it('calls taskNew', async () => {
-//     console.log('routes', routes);
-//     console.log('connect', connect);
-//     console.log('connect.connectDB', connect.connectDB);
-//     await routes.addNewTask({});
-//     sinon.assert.called(connect.connectDB);
-//   });
+  it('adds New Task', async () => {
+    await routes.addNewTask({}, stubDB);
+    sinon.assert.called(stubDB);
+  });
 
-  it('calls addNewTask', async () => {
+  it('updates task', async () => {
+    await routes.updateTask({});
+    sinon.assert.called(stubDB);
+  });
+
+  it('calls taskNew', async () => {
     const stubAddNewTask = sinon.stub(routes, 'addNewTask').returns(Promise.resolve({ }));
     const send = sinon.stub();
     const req = { body: {} };
