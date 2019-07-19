@@ -1,19 +1,20 @@
+/* eslint-disable class-methods-use-this */
 const chalk = require('chalk');
 const connect = require('./connect-db');
 
 class Routes {
-  // constructor() {
-  //   this.taskNew = this.taskNew.bind(this);
-  //   this.taskUpdate = this.taskUpdate.bind(this);
-  // }
+  constructor() {
+    this.taskNew = this.taskNew.bind(this);
+    this.taskUpdate = this.taskUpdate.bind(this);
+  }
 
-  static async addNewTask(task) {
+  async addNewTask(task) {
     const db = await connect.connectDB();
     const collection = db.collection('tasks');
     await collection.insertOne(task);
   }
 
-  static async updateTask(task) {
+  async updateTask(task) {
     const {
       id, group, isComplete, name
     } = task;
@@ -31,34 +32,27 @@ class Routes {
     }
   }
 
-  static async taskNew(req, res) {
+  async taskNew(req, res) {
     const { task } = req.body;
     console.log(chalk.green('Creating new task: '), task);
     await this.addNewTask(task);
     res.status(200).send();
   }
 
-  static async taskUpdate(req, res) {
+  async taskUpdate(req, res) {
     const { task } = req.body;
     console.log(chalk.blue('Updating task: '), task);
     await this.updateTask(task);
     res.status(200).send();
   }
 
-  static async commentNew(req, res) {
-    const { comment } = req.body;
-    const db = await connect.connectDB();
-    const collection = db.collection('comments');
-    await collection.insertOne(comment);
-    res.status(200).send();
-  }
+  // async commentNew(req, res) {
+  //   const { comment } = req.body;
+  //   const db = await connect.connectDB();
+  //   const collection = db.collection('comments');
+  //   await collection.insertOne(comment);
+  //   res.status(200).send();
+  // }
 }
 
-module.exports = Routes;
-// module.exports = {
-//   addNewTask,
-//   updateTask,
-//   taskNew,
-//   taskUpdate,
-//   commentNew
-// };
+module.exports = new Routes();

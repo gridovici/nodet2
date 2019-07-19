@@ -56,4 +56,4 @@ app.post('/task/new', routes.taskNew);
 
 app.post('/task/update', routes.taskUpdate);
 
-app.post('/comment/new', routes.commentNew);
+// app.post('/comment/new', routes.commentNew);
