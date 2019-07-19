@@ -52,7 +52,7 @@ class Routes {
   }
 
   async assembleUserState(user) {
-    const db = await connectDB();
+    const db = await connect.connectDB();
 
     const tasks = await db.collection('tasks').find({ owner: user.id }).toArray();
     const comments = await db.collection('comments').find({ task: { $in: tasks.map(task => task.id) } }).toArray();
@@ -74,11 +74,10 @@ class Routes {
 
   async authenticate(req, res) {
     console.log(chalk.yellow.bold('Received REQ!'));
-    console.log(connectDB);
     const { username, password } = req.body;
 
     try {
-      const db = await connectDB();
+      const db = await connect.connectDB();
       const collection = db.collection('users');
       const user = await collection.findOne({ name: username });
 
@@ -113,7 +112,7 @@ class Routes {
     const { username, password } = req.body;
 
     try {
-      const db = await connectDB();
+      const db = await connect.connectDB();
       const userCollection = db.collection('users');
       const user = await userCollection.findOne({ name: username });
 
