@@ -1,15 +1,20 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable consistent-return, class-methods-use-this */
 const chalk = require('chalk');
-const connect = require('./connect-db');
+const uuid = require('uuid');
+const md5 = require('md5');
+const { connectDB } = require('./connect-db');
 
 class Routes {
   constructor() {
+    this.authenticationTokens = [];
     this.taskNew = this.taskNew.bind(this);
     this.taskUpdate = this.taskUpdate.bind(this);
+    this.authenticate = this.authenticate.bind(this);
+    this.createUser = this.createUser.bind(this);
   }
 
   async addNewTask(task) {
-    const db = await connect.connectDB();
+    const db = await connectDB();
     const collection = db.collection('tasks');
     await collection.insertOne(task);
   }
@@ -18,7 +23,7 @@ class Routes {
     const {
       id, group, isComplete, name
     } = task;
-    const db = await connect.connectDB();
+    const db = await connectDB();
     const collection = db.collection('tasks');
 
     if (group) {
@@ -46,9 +51,110 @@ class Routes {
     res.status(200).send();
   }
 
+  async assembleUserState(user) {
+    const db = await connectDB();
+
+    const tasks = await db.collection('tasks').find({ owner: user.id }).toArray();
+    const comments = await db.collection('comments').find({ task: { $in: tasks.map(task => task.id) } }).toArray();
+    const groups = await db.collection('groups').find({ owner: user.id }).toArray();
+    //   const users = [
+    //     await db.collection('users').findOne({ id: user.id }),
+    // ...await db.collection('users').
+    //  find({ id: { $in: [...tasks, comments].map(x => x.owner) } }).toArray()
+    //   ];
+
+    return {
+      session: { authenticated: 'AUTHENTICATED', id: user.id },
+      groups,
+      comments,
+      tasks
+    // users,
+    };
+  }
+
+  async authenticate(req, res) {
+    console.log(chalk.yellow.bold('Received REQ!'));
+    console.log(connectDB);
+    const { username, password } = req.body;
+
+    try {
+      const db = await connectDB();
+      const collection = db.collection('users');
+      const user = await collection.findOne({ name: username });
+
+      if (!user) {
+        return res.status(500).send('User not found');
+      }
+
+      const hash = md5(password);
+      const passwordCorrect = (hash === user.passwordHash);
+
+      if (!passwordCorrect) {
+        return res.status(500).send('Password incorrect');
+      }
+
+      const token = uuid();
+
+      this.authenticationTokens.push({
+        token,
+        userID: user.id
+      });
+
+      const state = await this.assembleUserState(user);
+
+      res.send({ token, state });
+    } catch (err) {
+      console.log('NO AUTH!: ', err.message);
+      res.status(500).send({ message: err.message });
+    }
+  }
+
+  async createUser(req, res) {
+    const { username, password } = req.body;
+
+    try {
+      const db = await connectDB();
+      const userCollection = db.collection('users');
+      const user = await userCollection.findOne({ name: username });
+
+      if (user) {
+        res.status(500).send({ message: 'A user with that account name already exists.' });
+        return;
+      }
+
+      const userID = uuid();
+
+      await userCollection.insertOne({
+        name: username,
+        id: userID,
+        passwordHash: md5(password)
+      });
+
+      await db.collection('groups').insertMany([{
+        id: uuid(),
+        owner: userID,
+        name: 'To Do'
+      }, {
+        id: uuid(),
+        owner: userID,
+        name: 'Doing'
+      }, {
+        id: uuid(),
+        owner: userID,
+        name: 'Done'
+      }]);
+
+      const state = await this.assembleUserState({ id: userID, name: username });
+
+      res.status(200).send({ userID, state });
+    } catch (err) {
+      res.status(500).send({ message: err.message });
+    }
+  }
+
   // async commentNew(req, res) {
   //   const { comment } = req.body;
-  //   const db = await connect.connectDB();
+  //   const db = await connectDB();
   //   const collection = db.collection('comments');
   //   await collection.insertOne(comment);
   //   res.status(200).send();

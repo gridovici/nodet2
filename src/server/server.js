@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const path = require('path');
 
 const routes = require('./routes');
-const { authenticationRoute } = require('./authenticate');
 
 const port = process.env.PORT || 3456;
 const app = express();
@@ -42,8 +41,6 @@ app.use(
   morgan('tiny')
 );
 
-authenticationRoute(app);
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, '../../dist')));
   app.get('/*', (req, res) => {
@@ -53,7 +50,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.post('/task/new', routes.taskNew);
-
 app.post('/task/update', routes.taskUpdate);
+app.post('/authenticate', routes.authenticate);
+app.post('/user/create', routes.createUser);
 
 // app.post('/comment/new', routes.commentNew);

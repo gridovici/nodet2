@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 
-import Routes from '../../src/server/routes';
+import routes from '../../src/server/routes';
 import connect from '../../src/server/connect-db';
 
 let stub = null;
@@ -23,20 +23,20 @@ describe('test routes', () => {
   //   expect(true).to.be.true;
   // });
 
-  it('calls taskNew', async () => {
-    console.log('routes', Routes);
-    console.log('connect', connect);
-    console.log('connect.connectDB', connect.connectDB);
-    await Routes.addNewTask({});
-    sinon.assert.called(connect.connectDB);
-  });
+//   it('calls taskNew', async () => {
+//     console.log('routes', routes);
+//     console.log('connect', connect);
+//     console.log('connect.connectDB', connect.connectDB);
+//     await routes.addNewTask({});
+//     sinon.assert.called(connect.connectDB);
+//   });
 
   it('calls addNewTask', async () => {
-    const stubAddNewTask = sinon.stub(Routes, 'addNewTask').returns(Promise.resolve({ }));
+    const stubAddNewTask = sinon.stub(routes, 'addNewTask').returns(Promise.resolve({ }));
     const send = sinon.stub();
     const req = { body: {} };
     const res = { status: sinon.stub().returns({ send }) };
-    await Routes.taskNew(req, res);
+    await routes.taskNew(req, res);
     sinon.assert.calledOnce(stubAddNewTask);
     sinon.assert.calledOnce(res.status);
     sinon.assert.calledOnce(send);

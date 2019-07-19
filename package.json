@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack -p",
     "test": "mocha --require @babel/register tests/**/*.js",
-    "test-watch": "mocha --require @babel/register tests/index.spec.js --watch",
+    "test-watch": "mocha --require @babel/register tests/server/connectDB.spec.js --watch",
     "start": "npm run server",
     "start-gulp": "gulp --require @babel/register --gulpfile tasks",
     "start-webpack": "rm -rf ./dist && webpack",
