@@ -1,12 +1,7 @@
 import sinon from 'sinon';
-import Routes from '../src/server/routes';
-// import chai from 'chai';
-// import * as routes from '../src/server/routes';
 
-// const connect = require('../src/server/connect-db');
-// import { connectDB } from '../src/server/connect-db';
-// import * as connect from '../src/server/connect-db';
-import connect from '../src/server/connect-db';
+import Routes from '../../src/server/routes';
+import connect from '../../src/server/connect-db';
 
 let stub = null;
 
