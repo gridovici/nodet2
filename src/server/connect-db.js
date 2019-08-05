@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { MongoClient } = require('mongodb');
+const logger = require('./logger');
 
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/organizer';
 
@@ -13,7 +14,8 @@ class ConnectDB {
     if (this.db) return this.db;
     const client = await MongoClient.connect(url, { useNewUrlParser: true });
     this.db = client.db();
-    console.info('DB created and retrieved: ', this.db);
+    // console.info('DB created and retrieved: ', this.db);
+    logger.logInfo('DB created and retrieved: ', this.db);
     return this.db;
   }
 }

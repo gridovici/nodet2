@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const uuid = require('uuid');
 const md5 = require('md5');
 const connect = require('./connect-db');
+const logger = require('./logger');
 
 class Routes {
   constructor() {
@@ -82,6 +83,7 @@ class Routes {
       const user = await collection.findOne({ name: username });
 
       if (!user) {
+        logger.logError('Tried log with incorrect username');
         return res.status(500).send('User not found');
       }
 
@@ -89,6 +91,7 @@ class Routes {
       const passwordCorrect = (hash === user.passwordHash);
 
       if (!passwordCorrect) {
+        logger.logError('Tried log with incorrect password');
         return res.status(500).send('Password incorrect');
       }
 
@@ -103,7 +106,8 @@ class Routes {
 
       res.send({ token, state });
     } catch (err) {
-      console.log('NO AUTH!: ', err.message);
+      // console.log('NO AUTH!: ', err.message);
+      logger.logError('NO AUTH!: ', err.message);
       res.status(500).send({ message: err.message });
     }
   }
@@ -117,6 +121,7 @@ class Routes {
       const user = await userCollection.findOne({ name: username });
 
       if (user) {
+        logger.logError('A user with that account name already exists.');
         res.status(500).send({ message: 'A user with that account name already exists.' });
         return;
       }
@@ -147,6 +152,7 @@ class Routes {
 
       res.status(200).send({ userID, state });
     } catch (err) {
+      logger.logError(err.message);
       res.status(500).send({ message: err.message });
     }
   }

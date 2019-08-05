@@ -94,7 +94,7 @@ class Logger {
   }
 
   logError(error) {
-    this.logger.info(error);
+    this.logger.error(error);
   }
 }
 
