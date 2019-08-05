@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const path = require('path');
 
 const routes = require('./routes');
+const logger = require('./logger');
 
 const port = process.env.PORT || 3456;
 const app = express();
@@ -38,7 +39,8 @@ app.use(
   cors(),
   bodyParser.urlencoded({ extended: true }), // for POST req
   bodyParser.json(),
-  morgan('tiny')
+  // morgan('tiny')
+  morgan('combined', { stream: logger.getLogger().stream })
 );
 
 if (process.env.NODE_ENV === 'production') {
