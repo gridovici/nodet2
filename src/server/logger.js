@@ -1,4 +1,5 @@
 const appRoot = require('app-root-path');
+const os = require('os');
 
 const { createLogger, format, transports } = require('winston');
 const fs = require('fs');
@@ -20,7 +21,7 @@ const options = {
       format.timestamp({
         format: 'YYYY-MM-DD HH:mm:ss'
       }),
-      format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+      format.printf(info => `${os.hostname()}: ${info.timestamp} ${info.level}: ${info.message}`)
     ),
     handleExceptions: true,
     json: true,
@@ -52,7 +53,7 @@ const options = {
         format: 'YYYY-MM-DD HH:mm:ss'
       }),
       format.printf(
-        info => `${info.timestamp} ${info.level}: ${info.message}`
+        info => `Host (${os.hostname()}): ${info.timestamp} ${info.level}: ${info.message}`
       )
     ),
     handleExceptions: true,
