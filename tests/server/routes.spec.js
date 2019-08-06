@@ -18,10 +18,6 @@ describe('test routes', () => {
     stubDB.restore();
   });
 
-  // it('checks equality', () => {
-  //   expect(true).to.be.true;
-  // });
-
   it('adds New Task', async () => {
     await routes.addNewTask({}, stubDB);
     sinon.assert.called(stubDB);

@@ -6,7 +6,7 @@
 ### To run:
 ```sh
 $ ~/Documents/t2/mongodb/bin/mongod
-$ npm run course-start-dev
+$ npm run start
 ```
 App objective to implement:
 - Webpack

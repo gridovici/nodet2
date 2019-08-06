@@ -13,15 +13,13 @@ const filenameError = path.join(logDir, 'error.log');
 const options = {
   file: {
     name: 'info-file',
-    //   // change level if in dev environment versus production
-    //   level: env === 'development' ? 'debug' : 'info',
     level: 'info',
     filename,
     format: format.combine(
       format.timestamp({
         format: 'YYYY-MM-DD HH:mm:ss'
       }),
-      format.printf(info => `${os.hostname()}: ${info.timestamp} ${info.level}: ${info.message}`)
+      format.printf(info => `Host (${os.hostname()}): ${info.timestamp} ${info.level}: ${info.message}`)
     ),
     handleExceptions: true,
     json: true,
@@ -37,7 +35,7 @@ const options = {
       format.timestamp({
         format: 'YYYY-MM-DD HH:mm:ss'
       }),
-      format.printf(info => `Error: ${info}`)
+      format.printf(info => `Host (${os.hostname()}): ${info.timestamp} ${info.level}: ${info.message}`)
     ),
     handleExceptions: true,
     json: true,

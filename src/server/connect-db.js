@@ -14,13 +14,9 @@ class ConnectDB {
     if (this.db) return this.db;
     const client = await MongoClient.connect(url, { useNewUrlParser: true });
     this.db = client.db();
-    // console.info('DB created and retrieved: ', this.db);
     logger.logInfo('DB created and retrieved: ', this.db);
     return this.db;
   }
 }
 
 module.exports = new ConnectDB();
-// module.exports = {
-//   connectDB
-// };

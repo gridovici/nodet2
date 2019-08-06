@@ -73,7 +73,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-// TODO: investigate setTaskCompletion taskId from ownProps
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { id } = ownProps.match.params;
   return {

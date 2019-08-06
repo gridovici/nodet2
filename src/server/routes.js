@@ -58,18 +58,12 @@ class Routes {
     const tasks = await db.collection('tasks').find({ owner: user.id }).toArray();
     const comments = await db.collection('comments').find({ task: { $in: tasks.map(task => task.id) } }).toArray();
     const groups = await db.collection('groups').find({ owner: user.id }).toArray();
-    //   const users = [
-    //     await db.collection('users').findOne({ id: user.id }),
-    // ...await db.collection('users').
-    //  find({ id: { $in: [...tasks, comments].map(x => x.owner) } }).toArray()
-    //   ];
 
     return {
       session: { authenticated: 'AUTHENTICATED', id: user.id },
       groups,
       comments,
       tasks
-    // users,
     };
   }
 
@@ -106,7 +100,6 @@ class Routes {
 
       res.send({ token, state });
     } catch (err) {
-      // console.log('NO AUTH!: ', err.message);
       logger.logError('NO AUTH!: ', err.message);
       res.status(500).send({ message: err.message });
     }
@@ -156,14 +149,6 @@ class Routes {
       res.status(500).send({ message: err.message });
     }
   }
-
-  // async commentNew(req, res) {
-  //   const { comment } = req.body;
-  //   const db = await connectDB();
-  //   const collection = db.collection('comments');
-  //   await collection.insertOne(comment);
-  //   res.status(200).send();
-  // }
 }
 
 module.exports = new Routes();
